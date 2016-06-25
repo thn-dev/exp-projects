@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="exp-lire" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:e="http://ant.apache.org/ivy/extra">
+
+  <!-- project's specific properties -->
+  <property file="build.properties" />
+
+  <!-- generic properties -->
+  <import file="ant/properties.xml" />
+
+  <ivy:settings file="ivysettings.xml" />
+
+  <!-- utils related targets -->
+  <import file="ant/utils-targets.xml" />
+
+  <!-- ivy related targets -->
+  <import file="ant/ivy-targets.xml" />
+
+  <!-- project's default targets -->
+  <import file="ant/default-targets.xml" />
+</project>

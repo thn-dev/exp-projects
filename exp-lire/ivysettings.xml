@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ivysettings>
+  <property name="local.dir.ivy" value="${ivy.home}/dev"/>
+  <property name="local.dir.m2" value="${user.home}/.m2/repository/" />
+        
+  <settings defaultResolver="main"/>
+
+  <resolvers>
+    <filesystem name="local" >
+      <ivy pattern="${local.dir.ivy}/[module]/ivy-[revision].xml"/>
+      <artifact pattern="${local.dir.ivy}/[module]/[artifact]-[revision].[ext]"/>
+    </filesystem>
+
+	<filesystem name="local-m2" m2compatible="true">
+		<artifact pattern="${local.dir.m2}/[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
+		<ivy pattern="${local.dir.m2}/[organisation]/[module]/[revision]/[module]-[revision].pom" />
+	</filesystem>
+	  
+    <chain name="main">
+    	<resolver ref="local"/>
+    	<resolver ref="local-m2"/>
+	    <ibiblio name="central" m2compatible="true"/>
+    </chain>    
+  </resolvers>
+
+  <modules>
+    <module organisation="org.slf4j" resolver="central"/>
+    <module organisation="junit" name="junit" resolver="central"/>
+  </modules>
+</ivysettings>
