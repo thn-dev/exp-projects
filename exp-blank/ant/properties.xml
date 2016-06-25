@@ -1,0 +1,44 @@
+<project name="properties" basedir="..">
+  <!-- Initialize Property Values -->
+  <dirname property="proj.home" file="build.xml" />
+
+  <property name="app.title" value="Experiment Project" />
+  <property name="app.copyright" value="2016 Experiment Project" />
+
+  <tstamp>
+    <format property="now_ts" pattern="yyyyMMdd_HHmmss" />
+  </tstamp>
+  <property name="now" value="${now_ts}" />
+  <property name="package.name" value="${ant.project.name}-${version.prefix}.${now}" />
+
+  <property name="bin" value="bin" />
+  <property name="lib" value="lib" />
+  <property name="config" value="config" />
+  <property name="docs" value="docs" />
+
+  <!-- source code directories -->
+  <property name="src" value="src" />
+  <property name="src.java" value="${src}/main/java" />
+
+  <property name="src.package.path" value="thn.blank" />
+  <property name="src.package.name" value="thn.blank" />
+
+  <!-- documentation -->
+  <property name="javadoc" value="javadoc" />
+  <property name="reports" value="reports" />
+
+  <!-- build directories -->
+  <property name="build" value="build" />
+  <property name="build.classes" value="${build}/classes" />
+
+  <!-- deploy directories -->
+  <property name="deploy" value="deploy" />
+  <property name="deploy.cmd" value="${deploy}/cmd" />
+
+  <!-- distribution directories -->
+  <property name="dist" value="dist" />
+  <property name="dist.bin" value="${dist}/bin" />
+  <property name="dist.lib" value="${dist}/lib" />
+  <property name="dist.config" value="${dist}/config" />
+</project>
+

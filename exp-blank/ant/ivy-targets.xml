@@ -1,0 +1,21 @@
+<project name="ivy-targets" basedir=".." xmlns:ivy="antlib:org.apache.ivy.ant">
+  <!-- retrieve dependencies -->
+  <target name="ivy.resolve" description="retrieve dependencies with ivy">
+    <ivy:resolve />
+    <ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier])-[revision].[ext]" />
+  </target>
+
+  <!-- report dependencies -->
+  <target name="ivy.report" description="create dependency report with ivy">
+    <ivy:resolve />
+
+    <property name="ivy.report" value="${reports}/ivy-report" />
+    <mkdir dir="${ivy.report}" />
+    <ivy:report todir="${ivy.report}" graph="false" xml="false" />
+  </target>
+
+  <!-- clean ivy cache -->
+  <target name="ivy.clear">
+    <ivy:cleancache />
+  </target>
+</project>
