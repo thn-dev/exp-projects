@@ -1,0 +1,41 @@
+<!--
+*
+* Author: Tri H. Nguyen
+*
+-->
+<project name="properties" basedir="..">
+
+    <!-- Initialize Property Values -->
+    <dirname property="proj.home" file="build.xml"/>
+
+    <property name="app.title" value="PCAP Experimentation"/>
+    <property name="app.copyright" value="&#169; 2015 All Rights Reserved"/>
+
+    <property name="lib" value="lib"/>
+    <property name="config" value="config"/>
+    <property name="docs" value="docs"/>
+    <property name="bin" value="bin"/>
+
+    <!-- source code directories -->
+    <property name="src" value="src"/>
+    <property name="src.java" value="${src}/java"/>
+
+    <property name="src.package.path" value="thn/exp/pcap"/>
+    <property name="src.package.name" value="thn.exp.pcap"/>
+
+    <!-- documentation -->
+    <property name="javadoc" value="javadoc"/>
+
+    <!-- build directories -->
+    <property name="build" value="build"/>
+    <property name="build.classes" value="${build}/classes"/>
+
+    <!-- deploy directories -->
+    <property name="deploy" value="deploy"/>
+    <property name="deploy.cmd" value="${deploy}/cmd"/>
+
+    <!-- distribution directories -->
+    <property name="dist" value="dist"/>
+    <property name="dist.lib" value="${dist}/lib"/>
+</project>
+

@@ -1,0 +1,124 @@
+<!--
+*
+* Author: Tri H. Nguyen
+*
+-->
+<project name="hadoop-targets" basedir="..">
+    <!-- =================================================================== -->
+    <!-- Properties                                                          -->
+    <!-- =================================================================== -->
+    <property name="hadoop.name" value="hadoop"/>
+    <property name="hadoop.package.path" value="${src.package.path}/hadoop"/>
+    <property name="hadoop.package.name" value="${src.package.name}.hadoop"/>
+
+    <!-- =================================================================== -->
+    <!-- deploy.cmd.hadoop target                                            -->
+    <!-- =================================================================== -->
+    <target name="deploy.cmd.hadoop" depends="dist.cmd.hadoop"
+            description="Creates command-line application"
+    >
+        <property name="deploy.cmd.hadoop" value="${deploy.cmd}/hadoop"/>
+        <property name="deploy.cmd.hadoop.lib" value="${deploy.cmd.hadoop}/lib"/>
+
+        <mkdir dir="${deploy.cmd.hadoop}"/>
+        <mkdir dir="${deploy.cmd.hadoop.lib}"/>
+
+        <!-- copy files to deploy/cmd/hadoop location -->
+        <copy todir="${deploy.cmd.hadoop}" >
+            <fileset dir="${config}">
+                <include name="log4j.xml" />
+            </fileset>
+            <fileset dir="${bin}">
+                <include name="hadoop_setenv.cmd" />
+            </fileset>
+        </copy>
+
+        <!-- copy files to deploy/cmd/hadoop/lib location -->
+        <copy todir="${deploy.cmd.hadoop.lib}" >
+            <fileset dir="${dist.lib}">
+                <include name="${hadoop.name}.jar" />
+                <include name="${ant.project.name}_libs.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- dist.cmd.hadoop target                                              -->
+    <!-- =================================================================== -->
+    <target name="dist.cmd.hadoop" depends="dist">
+        <jar jarfile="${dist.lib}/${hadoop.name}.jar" basedir="${build.classes}">
+            <include name="${hadoop.package.path}/Hadoop.class" />
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- deploy.test.hadoop target                                           -->
+    <!-- =================================================================== -->
+    <target name="deploy.test.hadoop" depends="dist.test.hadoop"
+            description="Deploy applications for testing">
+        <property name="deploy.test.hadoop" value="${deploy.test}/hadoop"/>
+
+        <mkdir dir="${deploy.test.hadoop}"/>
+        <mkdir dir="${deploy.test.hadoop.lib}"/>
+
+        <!-- copy files to deploy/test/hadoop location -->
+        <copy todir="${deploy.test.hadoop}/config" >
+            <fileset dir="${config}">
+                <include name="log4j.xml" />
+            </fileset>
+        </copy>
+
+        <copy todir="${deploy.test.hadoop}/bin" >
+            <fileset dir="${bin}">
+                <include name="hadoop_test.cmd" />
+            </fileset>
+        </copy>
+
+        <!-- copy JAR files to deploy/test/hadoop/lib location -->
+        <copy todir="${deploy.test.hadoop}/lib" >
+            <fileset dir="${dist.lib}">
+                <include name="${hadoop.name}.jar" />
+                <include name="${hadoop.name}_test.jar" />
+                <include name="${ant.project.name}_libs.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- dist.test.hadoop target                                             -->
+    <!-- =================================================================== -->
+    <target name="dist.test.hadoop" depends="dist.test">
+
+        <!-- build JAR file needed for testing -->
+        <jar jarfile="${dist.lib}/${hadoop.name}.jar" basedir="${build.classes}">
+            <include name="${hadoop.package.path}/Hello.class" />
+        </jar>
+
+        <!-- build JAR file required for testing -->
+        <jar jarfile="${dist.lib}/${hadoop.name}_test.jar" basedir="${build.test}">
+            <include name="${hadoop.package.path}/PcapTest.class" />
+        </jar>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- test.cmd.hadoop target                                              -->
+    <!-- =================================================================== -->
+    <path id="hadoop.classpath">
+        <pathelement location="${config}"/>
+        <pathelement location="${dist.lib}/${hadoop.name}.jar"/>
+        <pathelement location="${dist.lib}/${hadoop.name}_test.jar"/>
+        <pathelement location="${dist.lib}/${ant.project.name}_libs.jar"/>
+    </path>
+
+    <!-- test.cmd.hadoop target -->
+    <target name="test.cmd.hadoop" depends="dist.test.hadoop"
+        description="Tests PCAP module"
+    >
+        <junit>
+            <classpath refid="hadoop.classpath" />
+            <formatter type="brief" usefile="false" />
+            <test name="${hadoop.package.name}.PcapTest" />
+        </junit>
+    </target>
+
+</project>
